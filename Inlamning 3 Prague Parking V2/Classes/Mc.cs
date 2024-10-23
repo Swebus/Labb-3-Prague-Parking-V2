@@ -8,7 +8,7 @@ namespace Inlamning_3_Prague_Parking_V2.Classes
 {
     public class Mc : Vehicle
     {
-        public static int Size { get; } = 1;
+        public int Size { get; } = 1;
 
         public Mc(string regNumber, DateTime parkingTime)
             : base(regNumber, parkingTime)

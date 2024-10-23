@@ -7,11 +7,20 @@ int garageSize = 101;
 
 Vehicle[,] vehicleList = new Vehicle[garageSize, 2];
 
+ParkingGarage pragueParking = new ParkingGarage(10, 20, 101);
+
+ParkingSpot[] parkeringPlatser = new ParkingSpot[pragueParking.GarageSize];
+for (int i = 0; i < parkeringPlatser.Length; i++)
+{
+    ParkingSpot spot = new ParkingSpot(0);
+}
 
 
 
 
-ParkingSpot[] parkingSpots = new ParkingSpot[101];
+
+
+
 //for (int i = 1;  i < parkingSpots.Length; i++)
 //{
 //    ParkingSpot parkingSpot = new ParkingSpot(0);
@@ -101,20 +110,26 @@ void ParkVehicle()
 
     if (type == 1)      //type 1 = Car
     {
-        for (int i = 1; i < vehicleList.GetLength(0); i++)
+        for (int i = 1; i < parkeringPlatser.Length; i++)
         {
-            if (vehicleList[i, 0] == null)
+            int check = parkeringPlatser[i].CurrentSize;
+            if (check == 0)
             {
                 string regNumber = GetRegNumber();
                 DateTime parkingTime = DateTime.Now;
                 Car newCar = new Car(regNumber, parkingTime);
 
+                Console.WriteLine(newCar.RegNumber);
+
+                parkeringPlatser[i].AddVehicle(newCar);
                 //if (newCar is Car car)
                 //{
-                //    parkingSpots[i].CurrentSize = Car.Size;
+                //    parkingSpots[i].CurrentSize = Car.Size
                 //}
-
-                vehicleList[i, 0] = newCar;
+                Console.WriteLine(parkeringPlatser[i].parkingSpot[1].RegNumber);
+                Console.Write("Press a key to continue: . . . ");
+                Console.ReadKey();
+                //vehicleList[i, 0] = newCar;
                 break;
             }
         }
