@@ -128,7 +128,7 @@ void ParkVehicle()
                 //{
                 //    parkingSpots[i].CurrentSize = Car.Size
                 //}
-                UpdateParkingJson();
+                SaveParkingSpots();
                 Console.WriteLine("Fordon med regNummer " + parkeringPlatser[i].parkingSpot[0].RegNumber + "Registrerad på parkeringsplats nr " + i);
                 Console.Write("Press a key to continue: . . . ");
                 Console.ReadKey();
@@ -142,22 +142,6 @@ void ParkVehicle()
         for (int i = 1; i <= parkeringPlatser.Length; i++)
 
         {
-            
-            //if (parkeringPlatser[i].CurrentSize == 0)
-            //{
-            //    string regNumber = GetRegNumber();
-            //    DateTime parkingTime = DateTime.Now;
-            //    Mc newMc = new Mc(regNumber, parkingTime);
-
-            //    parkeringPlatser[i].AddVehicle(newMc);
-            //    parkeringPlatser[i].CurrentSize =+ newMc.Size;
-
-            //    Console.WriteLine("Fordon med regNummer " + parkeringPlatser[i].parkingSpot[0].RegNumber + "Registrerad på parkeringsplats nr " + i);
-            //    Console.Write("Press a key to continue: . . . ");
-            //    Console.ReadKey();
-
-            //    break;
-            //}
             if ((parkeringPlatser[i].CurrentSize) < (parkeringPlatser[i].MaxSize))
             {
                 string regNumber = GetRegNumber();
@@ -167,7 +151,7 @@ void ParkVehicle()
                 parkeringPlatser[i].AddVehicle(newMc);
                 parkeringPlatser[i].CurrentSize = parkeringPlatser[i].CurrentSize + newMc.Size;
 
-                UpdateParkingJson();
+                SaveParkingSpots();
                 Console.WriteLine("Fordon med regNummer " + parkeringPlatser[i].parkingSpot[0].RegNumber + "Registrerad på parkeringsplats nr " + i);
                 Console.Write("Press a key to continue: . . . ");
                 Console.ReadKey();
@@ -266,24 +250,7 @@ void ShowParkingSpaces()
         
     //}
 }
-void UpdateParkingJson()
-{
-    //ParkingSpot[] parkeringsPlatserJson = LoadParkingSpotsFromJson();
-    SaveParkingSpots();
-}
-//ParkingSpot[] LoadParkingSpotsFromJson()
-//{
-//    if (File.Exists(filepath))
-//    {
-//        string parkingArrayJsonString = File.ReadAllText(filepath + "ParkingArray.json");
-//        return JsonSerializer.Deserialize<ParkingSpot[]>(parkingArrayJsonString);
-//    }
-//    else
-//    {
-//        // If the file doesn't exist, return an empty array or handle as needed
-//        return new ParkingSpot[pragueParking.GarageSize]; // Or however many you need
-//    }
-//}
+
 void SaveParkingSpots()
 {
     string updatedParkingArrayJsonString = JsonSerializer.Serialize(parkeringPlatser, new JsonSerializerOptions { WriteIndented = true });
