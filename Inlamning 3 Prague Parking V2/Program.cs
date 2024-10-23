@@ -1,5 +1,6 @@
 ﻿using Spectre.Console;
 using Inlamning_3_Prague_Parking_V2.Classes;
+using System.Text.Json;
 
 string filepath = "../../../";
 
@@ -12,7 +13,7 @@ ParkingGarage pragueParking = new ParkingGarage(10, 20, 101);
 ParkingSpot[] parkeringPlatser = new ParkingSpot[pragueParking.GarageSize];
 for (int i = 0; i < parkeringPlatser.Length; i++)
 {
-    ParkingSpot spot = new ParkingSpot(0);
+    parkeringPlatser[i] = new ParkingSpot(0);
 }
 
 
@@ -112,21 +113,23 @@ void ParkVehicle()
     {
         for (int i = 1; i < parkeringPlatser.Length; i++)
         {
-            int check = parkeringPlatser[i].CurrentSize;
-            if (check == 0)
+            
+            if (parkeringPlatser[i].CurrentSize == 0)
             {
                 string regNumber = GetRegNumber();
                 DateTime parkingTime = DateTime.Now;
                 Car newCar = new Car(regNumber, parkingTime);
 
-                Console.WriteLine(newCar.RegNumber);
+                
 
                 parkeringPlatser[i].AddVehicle(newCar);
+                parkeringPlatser[i].CurrentSize =+ newCar.Size;
                 //if (newCar is Car car)
                 //{
                 //    parkingSpots[i].CurrentSize = Car.Size
                 //}
-                Console.WriteLine(parkeringPlatser[i].parkingSpot[1].RegNumber);
+                UpdateParkingJson();
+                Console.WriteLine("Fordon med regNummer " + parkeringPlatser[i].parkingSpot[0].RegNumber + "Registrerad på parkeringsplats nr " + i);
                 Console.Write("Press a key to continue: . . . ");
                 Console.ReadKey();
                 //vehicleList[i, 0] = newCar;
@@ -136,26 +139,39 @@ void ParkVehicle()
     }
     else if (type == 2)     //type 2 = Mc
     {
-        for (int i = 1; i <= vehicleList.GetLength(0); i++)
+        for (int i = 1; i <= parkeringPlatser.Length; i++)
 
         {
             
-            if (vehicleList[i, 0] == null)
+            //if (parkeringPlatser[i].CurrentSize == 0)
+            //{
+            //    string regNumber = GetRegNumber();
+            //    DateTime parkingTime = DateTime.Now;
+            //    Mc newMc = new Mc(regNumber, parkingTime);
+
+            //    parkeringPlatser[i].AddVehicle(newMc);
+            //    parkeringPlatser[i].CurrentSize =+ newMc.Size;
+
+            //    Console.WriteLine("Fordon med regNummer " + parkeringPlatser[i].parkingSpot[0].RegNumber + "Registrerad på parkeringsplats nr " + i);
+            //    Console.Write("Press a key to continue: . . . ");
+            //    Console.ReadKey();
+
+            //    break;
+            //}
+            if ((parkeringPlatser[i].CurrentSize) < (parkeringPlatser[i].MaxSize))
             {
                 string regNumber = GetRegNumber();
                 DateTime parkingTime = DateTime.Now;
                 Mc newMc = new Mc(regNumber, parkingTime);
 
-                vehicleList[i, 0] = newMc;
-                break;
-            }
-            else if ((vehicleList[i, 0] != null) && (vehicleList[i,0] is Mc) && (vehicleList[i, 1] == null) )
-            {
-                string regNumber = GetRegNumber();
-                DateTime parkingTime = DateTime.Now;
-                Mc newMc = new Mc(regNumber, parkingTime);
+                parkeringPlatser[i].AddVehicle(newMc);
+                parkeringPlatser[i].CurrentSize = parkeringPlatser[i].CurrentSize + newMc.Size;
 
-                vehicleList[i, 1] = newMc;
+                UpdateParkingJson();
+                Console.WriteLine("Fordon med regNummer " + parkeringPlatser[i].parkingSpot[0].RegNumber + "Registrerad på parkeringsplats nr " + i);
+                Console.Write("Press a key to continue: . . . ");
+                Console.ReadKey();
+
                 break;
             }
         }
@@ -205,11 +221,11 @@ void ShowParkingSpaces()
         {
             Console.WriteLine("");
         }
-        if ((vehicleList[i, 0] is Car) | (vehicleList[i, 1] != null))
+        if (parkeringPlatser[i].CurrentSize == parkeringPlatser[i].MaxSize)
         {
             Console.ForegroundColor = ConsoleColor.Red;
         }
-        else if ((vehicleList[i, 0] is Mc) && (vehicleList[i, 1] == null))
+        else if ((parkeringPlatser[i].CurrentSize < parkeringPlatser[i].MaxSize) && (parkeringPlatser[i].CurrentSize > 00))
         {
             Console.ForegroundColor = ConsoleColor.Green;
         }
@@ -250,9 +266,29 @@ void ShowParkingSpaces()
         
     //}
 }
-
-
-
+void UpdateParkingJson()
+{
+    //ParkingSpot[] parkeringsPlatserJson = LoadParkingSpotsFromJson();
+    SaveParkingSpots();
+}
+//ParkingSpot[] LoadParkingSpotsFromJson()
+//{
+//    if (File.Exists(filepath))
+//    {
+//        string parkingArrayJsonString = File.ReadAllText(filepath + "ParkingArray.json");
+//        return JsonSerializer.Deserialize<ParkingSpot[]>(parkingArrayJsonString);
+//    }
+//    else
+//    {
+//        // If the file doesn't exist, return an empty array or handle as needed
+//        return new ParkingSpot[pragueParking.GarageSize]; // Or however many you need
+//    }
+//}
+void SaveParkingSpots()
+{
+    string updatedParkingArrayJsonString = JsonSerializer.Serialize(parkeringPlatser, new JsonSerializerOptions { WriteIndented = true });
+    File.WriteAllText(filepath + "ParkingArray.json", updatedParkingArrayJsonString);
+}
 //Console.WriteLine(newCar.RegNumber + "   " + vehicleList[1].ParkingTime);
 
 
