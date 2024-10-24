@@ -4,9 +4,7 @@ using System.Text.Json;
 
 string filepath = "../../../";
 
-int garageSize = 101;
 
-Vehicle[,] vehicleList = new Vehicle[garageSize, 2];
 
 ParkingGarage pragueParking = new ParkingGarage(10, 20, 101);
 
@@ -62,11 +60,15 @@ while (!exit)
     // Main menu selections
     var selection = AnsiConsole.Prompt(
         new SelectionPrompt<string>()
-            .PageSize(4)
+            .PageSize(8)
             .AddChoices(new[] {
             "Park Vehicle",
-            "Get Vehicle",
+            "Get Vehicle",        //Sigrid
+            "Move Vehicle",        //RObert
+            "Find Vehicle",        //Omeed
+            "Reload Config File",      //Sebastian
             "Show Parking Spaces",
+            "Show Detailed Spaces",
             "Close Program",
             }));
     
@@ -129,9 +131,8 @@ void ParkVehicle()
                 //    parkingSpots[i].CurrentSize = Car.Size
                 //}
                 SaveParkingSpots();
-                Console.WriteLine("Fordon med regNummer " + parkeringPlatser[i].parkingSpot[0].RegNumber + "Registrerad på parkeringsplats nr " + i);
-                Console.Write("Press a key to continue: . . . ");
-                Console.ReadKey();
+                Console.WriteLine("Fordon med regNummer " + parkeringPlatser[i].parkingSpot[0].RegNumber + " registrerad på parkeringsplats nr " + i);
+                
                 //vehicleList[i, 0] = newCar;
                 break;
             }
@@ -152,9 +153,8 @@ void ParkVehicle()
                 parkeringPlatser[i].CurrentSize = parkeringPlatser[i].CurrentSize + newMc.Size;
 
                 SaveParkingSpots();
-                Console.WriteLine("Fordon med regNummer " + parkeringPlatser[i].parkingSpot[0].RegNumber + "Registrerad på parkeringsplats nr " + i);
-                Console.Write("Press a key to continue: . . . ");
-                Console.ReadKey();
+                Console.WriteLine("Fordon med regNummer " + parkeringPlatser[i].parkingSpot[0].RegNumber + " registrerad på parkeringsplats nr " + i);
+               
 
                 break;
             }
@@ -199,7 +199,7 @@ void ShowParkingSpaces()
 
     Console.WriteLine("==============================");
 
-    for (int i = 1; i < vehicleList.GetLength(0); i++)
+    for (int i = 1; i < parkeringPlatser.Length; i++)
     {
         if ((i - 1) % 10 == 0)
         {
@@ -257,6 +257,14 @@ void SaveParkingSpots()
     File.WriteAllText(filepath + "ParkingArray.json", updatedParkingArrayJsonString);
 }
 //Console.WriteLine(newCar.RegNumber + "   " + vehicleList[1].ParkingTime);
+
+
+
+// Metod som kontrollerar tillåtna recken
+
+// Metod som kontrollerar om fordon redan finns  -- Tar emot inputsträng, gert tillbaka true eller false. 
+
+// Metod som räknar ut pris för parkering.  -- första 10 minuterna är gratis
 
 
 

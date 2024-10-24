@@ -7,36 +7,22 @@
   {
     "parkingSpot": [
       {
-        "RegNumber": "aaa",
-        "ParkingTime": "2024-10-23T18:28:34.8729568+02:00"
-      }
-    ],
-    "MaxSize": 2,
-    "CurrentSize": 2
-  },
-  {
-    "parkingSpot": [
-      {
         "RegNumber": "123",
-        "ParkingTime": "2024-10-23T18:28:54.2522984+02:00"
+        "ParkingTime": "2024-10-24T20:31:07.6320685+02:00"
       }
     ],
     "MaxSize": 2,
     "CurrentSize": 2
   },
   {
-    "parkingSpot": [
-      {
-        "RegNumber": "1",
-        "ParkingTime": "2024-10-23T18:29:05.6609032+02:00"
-      },
-      {
-        "RegNumber": "2",
-        "ParkingTime": "2024-10-23T18:29:09.4698596+02:00"
-      }
-    ],
+    "parkingSpot": [],
     "MaxSize": 2,
-    "CurrentSize": 2
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 2,
+    "CurrentSize": 0
   },
   {
     "parkingSpot": [],
