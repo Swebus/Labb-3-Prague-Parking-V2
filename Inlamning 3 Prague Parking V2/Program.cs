@@ -86,6 +86,11 @@ while (!exit)
                // GetVehicle();
                 break;
             }
+        case "Move Vehicle":
+            {
+                MoveVehicle();
+                break;
+            }
         case "Show Parking Spaces":
             {
                 ShowParkingSpaces();
@@ -194,6 +199,19 @@ string GetRegNumber()
 
     return regNumber;
 }
+void MoveVehicle()
+{
+    // Inmatning regNummer
+    // Söka igenom listan == RegNummer
+    // 1#Print ut Plats ##, Regnummer när den har hittat
+    // !Print Tyvärr hitta ingen den regnummer angiven. return MainMeny.
+    // Hitta - Vilken plats vill du flytta till?
+    // Söka Igenom om den platsen är ledig
+    // OK - Spara / samtidigt  Null den gamla platsen.
+    // Inte - Return/försöka igen.
+    //
+}
+
 void ShowParkingSpaces()
 {
 
