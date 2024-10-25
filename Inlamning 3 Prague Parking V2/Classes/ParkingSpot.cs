@@ -11,18 +11,21 @@ namespace Inlamning_3_Prague_Parking_V2.Classes
         public List<Vehicle> parkingSpot { get; set; }
         public int MaxSize { get; }
         public int CurrentSize { get; set; }
-
-
         public ParkingSpot(int currentSize) 
         {
-            MaxSize = 2;
+            MaxSize = 4;
             parkingSpot = new List<Vehicle>();
             CurrentSize = currentSize;
         }
-
-        public void AddVehicle(Vehicle vehicle)
+        public bool TakeVehicle(Vehicle vehicle)
         {
-            parkingSpot.Add(vehicle);
+            if (CurrentSize + vehicle.Size <= MaxSize) 
+            { 
+                parkingSpot.Add(vehicle);
+                CurrentSize += vehicle.Size;
+                return true; 
+            }
+            return false;
         }
     }
 }
