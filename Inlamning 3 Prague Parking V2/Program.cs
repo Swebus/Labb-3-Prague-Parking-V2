@@ -113,52 +113,21 @@ void ParkVehicle()
 
     if (type == 1)      //type 1 = Car
     {
-        for (int i = 1; i < parkeringPlatser.Length; i++)
-        {
-            
-            if (parkeringPlatser[i].CurrentSize == 0)
-            {
-                string regNumber = GetRegNumber();
-                DateTime parkingTime = DateTime.Now;
-                Car newCar = new Car(regNumber, parkingTime);
+        string regNumber = GetRegNumber();
+        DateTime parkingTime = DateTime.Now;
+        Car newCar = new Car(regNumber, parkingTime);
 
-                
-
-                parkeringPlatser[i].AddVehicle(newCar);
-                parkeringPlatser[i].CurrentSize =+ newCar.Size;
-                //if (newCar is Car car)
-                //{
-                //    parkingSpots[i].CurrentSize = Car.Size
-                //}
-                SaveParkingSpots();
-                Console.WriteLine("Fordon med regNummer " + parkeringPlatser[i].parkingSpot[0].RegNumber + " registrerad på parkeringsplats nr " + i);
-                
-                //vehicleList[i, 0] = newCar;
-                break;
-            }
-        }
+        newCar.ParkVehicle(parkeringPlatser);
+        SaveParkingSpots();
     }
     else if (type == 2)     //type 2 = Mc
     {
-        for (int i = 1; i <= parkeringPlatser.Length; i++)
+        string regNumber = GetRegNumber();
+        DateTime parkingTime = DateTime.Now;
+        Mc newMc = new Mc(regNumber, parkingTime);
 
-        {
-            if ((parkeringPlatser[i].CurrentSize) < (parkeringPlatser[i].MaxSize))
-            {
-                string regNumber = GetRegNumber();
-                DateTime parkingTime = DateTime.Now;
-                Mc newMc = new Mc(regNumber, parkingTime);
-
-                parkeringPlatser[i].AddVehicle(newMc);
-                parkeringPlatser[i].CurrentSize = parkeringPlatser[i].CurrentSize + newMc.Size;
-
-                SaveParkingSpots();
-                Console.WriteLine("Fordon med regNummer " + parkeringPlatser[i].parkingSpot[0].RegNumber + " registrerad på parkeringsplats nr " + i);
-               
-
-                break;
-            }
-        }
+        newMc.ParkVehicle(parkeringPlatser);
+        SaveParkingSpots();
     }
 }
 int ChooseVehicleType()
@@ -179,7 +148,6 @@ int ChooseVehicleType()
     {
         type = 2;
     }
-
     return type;
 }
 string GetRegNumber()
