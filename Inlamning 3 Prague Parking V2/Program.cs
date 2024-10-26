@@ -1,6 +1,7 @@
 ﻿using Spectre.Console;
 using Inlamning_3_Prague_Parking_V2.Classes;
 using System.Text.Json;
+using System.ComponentModel.Design;
 
 string filepath = "../../../";
 
@@ -61,6 +62,11 @@ while (!exit)
                // GetVehicle();
                 break;
             }
+        case "Move Vehicle":
+            {
+                MoveVehicle();
+                break;
+            }
         case "Show Parking Spaces":
             {
                 ShowParkingSpaces();
@@ -74,7 +80,7 @@ while (!exit)
     }
     if (!exit)
     {
-        Console.Write("Press a key to continue: . . . ");
+        Console.Write("\nPress a key to continue: . . . ");
         Console.ReadKey();
         Console.Clear();
     }
@@ -137,6 +143,90 @@ string GetRegNumber()
 
     return regNumber;
 }
+void MoveVehicle()
+{
+    string regNumber;
+    
+    do
+    {
+        Console.WriteLine("Enter Registration Number or exit for exit: ");
+        regNumber = Console.ReadLine()?.Trim();
+        if (string.IsNullOrEmpty(regNumber))
+        {
+            Console.WriteLine("Invalid, please try again or type exit: ");
+        }
+        else if (regNumber.ToLower() == "exit")
+        {
+            Console.WriteLine("Exit, back to Main Meny");
+            return;
+        }
+
+    } while (string.IsNullOrEmpty(regNumber)); 
+   
+     
+    ParkingSpot currentSpot = null;
+    Vehicle vehicleToMove = null;
+    int currentSpotIndex = -1;
+
+    // loop igenom för match regNum
+    for (int i = 1; i < parkeringPlatser.Length; i++)
+    {
+        var spot = parkeringPlatser[i];
+        vehicleToMove = spot.parkingSpot.FirstOrDefault(Vehicle => Vehicle.RegNumber == regNumber);
+        if (vehicleToMove != null)
+        {
+            currentSpot = spot;
+            currentSpotIndex = i;
+            break;
+        }
+    }
+
+    if (currentSpot == null)
+    {
+        Console.WriteLine($"Vehicle with registration number {regNumber} not found.");
+        return;
+    }
+    
+    Console.WriteLine($"Current parking spot for {regNumber} is {currentSpotIndex}");
+    int newSpotIndex;
+
+    bool isValidtoCheckOut = true;
+    do
+    {
+
+        Console.Write("Enter new parking spot number: ");
+
+        if (int.TryParse(Console.ReadLine(), out newSpotIndex) && newSpotIndex > 0 && newSpotIndex < parkeringPlatser.Length)
+        {
+            var newSpot = parkeringPlatser[newSpotIndex];
+
+            if (newSpot.CurrentSize + vehicleToMove.Size <= newSpot.MaxSize)
+            {
+                // To bort
+                currentSpot.parkingSpot.Remove(vehicleToMove);
+                currentSpot.CurrentSize -= vehicleToMove.Size;
+
+                // Flytta
+                newSpot.parkingSpot.Add(vehicleToMove);
+                newSpot.CurrentSize += vehicleToMove.Size;
+                Console.WriteLine($"Vehicle {regNumber} moved to spot {newSpotIndex}");
+
+                // Spara och update
+                SaveParkingSpots();
+                isValidtoCheckOut = false;
+            }
+            else
+            {
+                Console.WriteLine("Not enought space.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Invalid parking spot number. Please try again.");
+
+        }
+    } while (isValidtoCheckOut);
+}
 void ShowParkingSpaces()
 {
 
@@ -172,7 +262,6 @@ void ShowParkingSpaces()
     Console.WriteLine("\n\n==============================");
 
 }
-
 void SaveParkingSpots()
 {
     string updatedParkingArrayJsonString = JsonSerializer.Serialize(parkeringsPlatser, new JsonSerializerOptions { WriteIndented = true });
