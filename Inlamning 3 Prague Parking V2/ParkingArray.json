@@ -8,8 +8,19 @@
     "parkingSpot": [
       {
         "RegNumber": "123",
-        "ParkingTime": "2024-10-25T12:20:11.0782077+02:00",
-        "Size": 4
+        "ParkingTime": "2024-10-25T15:37:44.5165024+02:00",
+        "Size": 0
+      }
+    ],
+    "MaxSize": 4,
+    "CurrentSize": 4
+  },
+  {
+    "parkingSpot": [
+      {
+        "RegNumber": "123",
+        "ParkingTime": "2024-10-25T15:37:48.166591+02:00",
+        "Size": 0
       }
     ],
     "MaxSize": 4,
@@ -19,7 +30,34 @@
     "parkingSpot": [
       {
         "RegNumber": "456",
-        "ParkingTime": "2024-10-25T12:20:21.9418513+02:00",
+        "ParkingTime": "2024-10-25T15:37:51.2936352+02:00",
+        "Size": 0
+      },
+      {
+        "RegNumber": "789",
+        "ParkingTime": "2024-10-25T15:37:55.0205354+02:00",
+        "Size": 0
+      }
+    ],
+    "MaxSize": 4,
+    "CurrentSize": 4
+  },
+  {
+    "parkingSpot": [
+      {
+        "RegNumber": "89",
+        "ParkingTime": "2024-10-25T15:38:01.5926456+02:00",
+        "Size": 0
+      }
+    ],
+    "MaxSize": 4,
+    "CurrentSize": 2
+  },
+  {
+    "parkingSpot": [
+      {
+        "RegNumber": "123",
+        "ParkingTime": "2024-10-26T12:34:18.4619193+02:00",
         "Size": 4
       }
     ],
@@ -29,39 +67,13 @@
   {
     "parkingSpot": [
       {
-        "RegNumber": "789",
-        "ParkingTime": "2024-10-25T12:20:31.3073715+02:00",
-        "Size": 2
-      },
-      {
-        "RegNumber": "156",
-        "ParkingTime": "2024-10-25T12:20:36.7414552+02:00",
-        "Size": 2
+        "RegNumber": "46",
+        "ParkingTime": "2024-10-26T12:34:21.9889751+02:00",
+        "Size": 4
       }
     ],
     "MaxSize": 4,
     "CurrentSize": 4
-  },
-  {
-    "parkingSpot": [
-      {
-        "RegNumber": "aaa",
-        "ParkingTime": "2024-10-25T12:20:41.7329687+02:00",
-        "Size": 2
-      }
-    ],
-    "MaxSize": 4,
-    "CurrentSize": 2
-  },
-  {
-    "parkingSpot": [],
-    "MaxSize": 4,
-    "CurrentSize": 0
-  },
-  {
-    "parkingSpot": [],
-    "MaxSize": 4,
-    "CurrentSize": 0
   },
   {
     "parkingSpot": [],

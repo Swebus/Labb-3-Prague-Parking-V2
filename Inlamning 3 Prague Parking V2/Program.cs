@@ -4,30 +4,19 @@ using System.Text.Json;
 
 string filepath = "../../../";
 
+var configValues = ReadConfigTxt();
 
+ParkingGarage pragueParking = new ParkingGarage(configValues.mcPrize, configValues.carPrize, configValues.garageSize);
 
-ParkingGarage pragueParking = new ParkingGarage(10, 20, 101);
+string parkingJsonString = File.ReadAllText(filepath + "ParkingArray.json");
 
-ParkingSpot[] parkeringPlatser = new ParkingSpot[pragueParking.GarageSize];
-for (int i = 0; i < parkeringPlatser.Length; i++)
-{
-    parkeringPlatser[i] = new ParkingSpot(0);
-}
+ParkingSpot[] parkeringsPlatser = JsonSerializer.Deserialize<ParkingSpot[]>(parkingJsonString);
 
-
-
-
-
-
-
-//for (int i = 1;  i < parkingSpots.Length; i++)
+//ParkingSpot[] parkeringPlatser = new ParkingSpot[pragueParking.GarageSize];
+//for (int i = 0; i < parkeringPlatser.Length; i++)
 //{
-//    ParkingSpot parkingSpot = new ParkingSpot(0);
+//    parkeringPlatser[i] = new ParkingSpot(0);
 //}
-// List<Vehicle> vehicleList = new List<Vehicle>(new Vehicle[garageSize]);
-
-
-
 
 
 
@@ -39,20 +28,6 @@ while (!exit)
         .Centered()
         .Color(Color.Red));
     Console.WriteLine("\n\n\n\n\n");
-
-
-
-
-
-
-    //for (int i = 1; i < parkingSpots.Length; i++)
-    //{
-    //    int currentSize;
-    //    currentSize = parkingSpots[i].CurrentSize;
-    //    Console.Write(currentSize);
-    //}
-
-
 
 
 
@@ -117,7 +92,7 @@ void ParkVehicle()
         DateTime parkingTime = DateTime.Now;
         Car newCar = new Car(regNumber, parkingTime);
 
-        newCar.ParkVehicle(parkeringPlatser);
+        newCar.ParkVehicle(parkeringsPlatser);
         SaveParkingSpots();
     }
     else if (type == 2)     //type 2 = Mc
@@ -126,7 +101,7 @@ void ParkVehicle()
         DateTime parkingTime = DateTime.Now;
         Mc newMc = new Mc(regNumber, parkingTime);
 
-        newMc.ParkVehicle(parkeringPlatser);
+        newMc.ParkVehicle(parkeringsPlatser);
         SaveParkingSpots();
     }
 }
@@ -167,17 +142,17 @@ void ShowParkingSpaces()
 
     Console.WriteLine("==============================");
 
-    for (int i = 1; i < parkeringPlatser.Length; i++)
+    for (int i = 1; i < parkeringsPlatser.Length; i++)
     {
         if ((i - 1) % 10 == 0)
         {
             Console.WriteLine("");
         }
-        if (parkeringPlatser[i].CurrentSize == parkeringPlatser[i].MaxSize)
+        if (parkeringsPlatser[i].CurrentSize == parkeringsPlatser[i].MaxSize)
         {
             Console.ForegroundColor = ConsoleColor.Red;
         }
-        else if ((parkeringPlatser[i].CurrentSize < parkeringPlatser[i].MaxSize) && (parkeringPlatser[i].CurrentSize > 00))
+        else if ((parkeringsPlatser[i].CurrentSize < parkeringsPlatser[i].MaxSize) && (parkeringsPlatser[i].CurrentSize > 00))
         {
             Console.ForegroundColor = ConsoleColor.Green;
         }
@@ -196,36 +171,13 @@ void ShowParkingSpaces()
 
     Console.WriteLine("\n\n==============================");
 
-
-    //for (int i = 1; i < vehicleList.GetLength(0); i++)
-    //{
-    //    if (vehicleList[i, 0] != null) 
-    //    {
-    //        Console.Write(vehicleList[i, 0].RegNumber);
-    //        if (vehicleList[i, 1 !] != null)
-    //        {
-    //            Console.WriteLine(vehicleList[i, 1].RegNumber + "      ");
-    //        }
-    //        else
-    //        {
-    //            Console.WriteLine("");
-    //        }
-    //    }
-    //    else
-    //    { 
-    //        Console.WriteLine("Empty"); 
-    //    }
-        
-    //}
 }
 
 void SaveParkingSpots()
 {
-    string updatedParkingArrayJsonString = JsonSerializer.Serialize(parkeringPlatser, new JsonSerializerOptions { WriteIndented = true });
+    string updatedParkingArrayJsonString = JsonSerializer.Serialize(parkeringsPlatser, new JsonSerializerOptions { WriteIndented = true });
     File.WriteAllText(filepath + "ParkingArray.json", updatedParkingArrayJsonString);
 }
-//Console.WriteLine(newCar.RegNumber + "   " + vehicleList[1].ParkingTime);
-
 
 
 // Metod som kontrollerar tillåtna recken
@@ -236,7 +188,29 @@ void SaveParkingSpots()
 
 
 
+(int mcPrize, int carPrize, int garageSize) ReadConfigTxt()
+{
+    var configValues = new Dictionary<string, int>();
 
+    foreach (var line in File.ReadLines(filepath + "Config.txt"))
+    {
+        if (string.IsNullOrEmpty(line) || line.TrimStart().StartsWith("#")) continue;
+
+        var parts = line.Split(new[] { '=' }, 2);
+        if (parts.Length == 2)
+        {
+            string key = parts[0].Trim();
+            string value = parts[1].Trim().Split('#')[0].Trim();
+            configValues[key] = int.Parse(value);
+        }
+    }
+
+    configValues.TryGetValue("McPrize", out int mcPrize);
+    configValues.TryGetValue("CarPrize", out int carPrize);
+    configValues.TryGetValue("GarageSize", out int garageSize);
+
+    return (mcPrize, carPrize, garageSize);
+}
 
 
 
