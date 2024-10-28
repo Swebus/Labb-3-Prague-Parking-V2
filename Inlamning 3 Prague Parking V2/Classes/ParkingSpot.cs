@@ -27,5 +27,10 @@ namespace Inlamning_3_Prague_Parking_V2.Classes
             }
             return false;
         }
+
+        public bool ContainsVehicle(string regNumber)
+        {
+            return parkingSpot.Any(vehicle => vehicle.RegNumber == regNumber);
+        }
     }
 }
