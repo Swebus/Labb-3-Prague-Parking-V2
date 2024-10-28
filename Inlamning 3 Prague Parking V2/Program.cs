@@ -6,35 +6,26 @@ using System.Text.RegularExpressions;
 using System.Reflection.Metadata.Ecma335;
 
 string filepath = "../../../";
-int oldGarageSize;
+//int oldGarageSize;
 var configValues = ReadConfigTxt();
-
 ParkingGarage pragueParking = new ParkingGarage(configValues.mcPrize, configValues.carPrize, configValues.garageSize);
 
-
-
-
-
-// OM JSON FILEN KNASAR ===================================
-
-
-
-
-//vvvvvvvvvvvvvvvvv KOMMENTERA BORT DESSA TVÅ RADER vvvvvvvvvvvvvvvvvvvvvvv\\
-string parkingJsonString = File.ReadAllText(filepath + "ParkingArray.json");
-ParkingSpot[] parkeringsPlatser = JsonSerializer.Deserialize<ParkingSpot[]>(parkingJsonString);
-
-
-//vvvvvvvvvvvvvvvvv UNCOMMENT DETTA vvvvvvvvvvvvvvvvvvvvvvvvvv\\
-
-//ParkingSpot[] parkeringsPlatser = new ParkingSpot[pragueParking.GarageSize];
-//for (int i = 0; i < parkeringsPlatser.Length; i++)
-//{
-//    parkeringsPlatser[i] = new ParkingSpot(0);
-//}
-
-//SEN KÖR PROGRAMMET, OCH FIXA SEN TILLBAKA KOMMENTARERNA SOM DE VAR INNAN\\
-
+ParkingSpot[] parkeringsPlatser;
+if (File.Exists(filepath + "ParkingArray.json"))
+{
+    string parkingJsonString = File.ReadAllText(filepath + "ParkingArray.json");
+    parkeringsPlatser = JsonSerializer.Deserialize<ParkingSpot[]>(parkingJsonString);
+}
+else
+{
+    parkeringsPlatser = new ParkingSpot[pragueParking.GarageSize];
+    for (int i = 0; i < parkeringsPlatser.Length; i++)
+    {
+        parkeringsPlatser[i] = new ParkingSpot(0);
+    }
+    SaveParkingSpots();
+}
+ReloadConfigFile();
 
 
 
@@ -325,10 +316,10 @@ void SaveParkingSpots()
 
 void ReloadConfigFile()
 {
-    oldGarageSize = pragueParking.GarageSize;
+    //oldGarageSize = parkeringsPlatser.Length;
     bool isEmpty = true;
 
-    for (int i = 0; i <= parkeringsPlatser.Length; i++)
+    for (int i = 0; i < parkeringsPlatser.Length; i++)
     {
         if (parkeringsPlatser[i].CurrentSize > 0)
         {
@@ -340,11 +331,21 @@ void ReloadConfigFile()
     var newConfigValues = ReadConfigTxt();
 
 
-    if ((newConfigValues.garageSize < oldGarageSize) && (isEmpty == false))
+    if ((newConfigValues.garageSize < parkeringsPlatser.Length) && (isEmpty == false))
     {
-        ParkingGarage pragueParking = new ParkingGarage(newConfigValues.mcPrize, configValues.carPrize, oldGarageSize);
+        ParkingGarage pragueParking = new ParkingGarage(newConfigValues.mcPrize, configValues.carPrize, parkeringsPlatser.Length);
         Console.WriteLine("Garage not empty, number of spots remains the same. \n" +
             "Please empty the garage before decreasing its size.");
+    }
+    else if((newConfigValues.garageSize < parkeringsPlatser.Length) && (isEmpty == true))
+    {
+        ParkingGarage newPragueParking = new ParkingGarage(newConfigValues.mcPrize, newConfigValues.carPrize, newConfigValues.garageSize);
+        pragueParking = newPragueParking;
+        parkeringsPlatser = new ParkingSpot[pragueParking.GarageSize];
+        for (int i = 0; i < parkeringsPlatser.Length; i++)
+        {
+            parkeringsPlatser[i] = new ParkingSpot(0);
+        }
     }
     else
     {
