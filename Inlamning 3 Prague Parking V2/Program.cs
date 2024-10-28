@@ -146,7 +146,7 @@ string GetRegNumber()
 void MoveVehicle()
 {
     string regNumber;
-    
+
     do
     {
         Console.WriteLine("Enter Registration Number or exit for exit: ");
@@ -161,17 +161,17 @@ void MoveVehicle()
             return;
         }
 
-    } while (string.IsNullOrEmpty(regNumber)); 
-   
-     
+    } while (string.IsNullOrEmpty(regNumber));
+
+
     ParkingSpot currentSpot = null;
     Vehicle vehicleToMove = null;
     int currentSpotIndex = -1;
 
     // loop igenom för match regNum
-    for (int i = 1; i < parkeringPlatser.Length; i++)
+    for (int i = 1; i < parkeringsPlatser.Length; i++)
     {
-        var spot = parkeringPlatser[i];
+        var spot = parkeringsPlatser[i];
         vehicleToMove = spot.parkingSpot.FirstOrDefault(Vehicle => Vehicle.RegNumber == regNumber);
         if (vehicleToMove != null)
         {
@@ -186,7 +186,7 @@ void MoveVehicle()
         Console.WriteLine($"Vehicle with registration number {regNumber} not found.");
         return;
     }
-    
+
     Console.WriteLine($"Current parking spot for {regNumber} is {currentSpotIndex}");
     int newSpotIndex;
 
@@ -196,9 +196,9 @@ void MoveVehicle()
 
         Console.Write("Enter new parking spot number: ");
 
-        if (int.TryParse(Console.ReadLine(), out newSpotIndex) && newSpotIndex > 0 && newSpotIndex < parkeringPlatser.Length)
+        if (int.TryParse(Console.ReadLine(), out newSpotIndex) && newSpotIndex > 0 && newSpotIndex < parkeringsPlatser.Length)
         {
-            var newSpot = parkeringPlatser[newSpotIndex];
+            var newSpot = parkeringsPlatser[newSpotIndex];
 
             if (newSpot.CurrentSize + vehicleToMove.Size <= newSpot.MaxSize)
             {

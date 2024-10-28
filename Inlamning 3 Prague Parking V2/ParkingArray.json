@@ -5,59 +5,55 @@
     "CurrentSize": 0
   },
   {
-    "parkingSpot": [
-      {
-        "RegNumber": "123",
-        "ParkingTime": "2024-10-25T15:37:44.5165024+02:00",
-        "Size": 0
-      }
-    ],
+    "parkingSpot": [],
     "MaxSize": 4,
-    "CurrentSize": 4
+    "CurrentSize": 0
   },
   {
-    "parkingSpot": [
-      {
-        "RegNumber": "123",
-        "ParkingTime": "2024-10-25T15:37:48.166591+02:00",
-        "Size": 0
-      }
-    ],
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
     "MaxSize": 4,
     "CurrentSize": 0
   },
   {
     "parkingSpot": [
       {
-        "RegNumber": "456",
-        "ParkingTime": "2024-10-25T15:37:51.2936352+02:00",
-        "Size": 0
-      },
-      {
-        "RegNumber": "789",
-        "ParkingTime": "2024-10-25T15:37:55.0205354+02:00",
-        "Size": 0
-      }
-    ],
-    "MaxSize": 4,
-    "CurrentSize": 0
-  },
-  {
-    "parkingSpot": [
-      {
-        "RegNumber": "89",
-        "ParkingTime": "2024-10-25T15:38:01.5926456+02:00",
-        "Size": 0
-      }
-    ],
-    "MaxSize": 4,
-    "CurrentSize": 0
-  },
-  {
-    "parkingSpot": [
-      {
-        "RegNumber": "123",
-        "ParkingTime": "2024-10-26T12:34:18.4619193+02:00",
+        "RegNumber": "222",
+        "ParkingTime": "2024-10-28T09:29:28.9132528+01:00",
         "Size": 4
       }
     ],
@@ -67,38 +63,13 @@
   {
     "parkingSpot": [
       {
-        "RegNumber": "46",
-        "ParkingTime": "2024-10-26T12:34:21.9889751+02:00",
-        "Size": 4
+        "RegNumber": "123",
+        "ParkingTime": "2024-10-28T09:29:12.8453518+01:00",
+        "Size": 2
       }
     ],
     "MaxSize": 4,
-    "CurrentSize": 4
-  },
-  {
-    "parkingSpot": [],
-    "MaxSize": 4,
-    "CurrentSize": 0
-  },
-  {
-    "parkingSpot": [],
-    "MaxSize": 4,
-    "CurrentSize": 0
-  },
-  {
-    "parkingSpot": [],
-    "MaxSize": 4,
-    "CurrentSize": 0
-  },
-  {
-    "parkingSpot": [],
-    "MaxSize": 4,
-    "CurrentSize": 0
-  },
-  {
-    "parkingSpot": [],
-    "MaxSize": 4,
-    "CurrentSize": 0
+    "CurrentSize": 2
   },
   {
     "parkingSpot": [],
