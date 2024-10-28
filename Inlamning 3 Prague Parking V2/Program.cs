@@ -2,6 +2,8 @@
 using Inlamning_3_Prague_Parking_V2.Classes;
 using System.Text.Json;
 using System.ComponentModel.Design;
+using System.Text.RegularExpressions;
+using System.Reflection.Metadata.Ecma335;
 
 string filepath = "../../../";
 
@@ -133,15 +135,36 @@ int ChooseVehicleType()
 }
 string GetRegNumber()
 {
-    Console.Write("Enter vehicle registration number: ");
-    string regNumber = Console.ReadLine();
-    //**************************************
+    
+    while (true)
+    {
+        Console.Write("Enter vehicle registration number: ");
+        string regNumber = Console.ReadLine()?.Trim();
 
-    //input check!
+        if (string.IsNullOrEmpty(regNumber) | (regNumber.Length < 1) | (regNumber.Length > 10 | ContainsSpecialCharacters(regNumber)))
+        {
+            Console.WriteLine("Invalid, please try again.)");
+            continue;
+        }
+        bool regNumberExists = parkeringsPlatser.Any(spot => spot.ContainsVehicle(regNumber));
 
-    //**************************************
+        if (regNumberExists)
+        {
+            Console.WriteLine("This registration number is already parked. Please enter a new one.");
+        }
+        else
+        {
+            return regNumber;
+        } 
+    }
 
-    return regNumber;
+
+} 
+// Metod som kontrollerar tillåtna recken
+// Metod som kontrollerar om fordon redan finns  -- Tar emot inputsträng, gert tillbaka true eller false. 
+bool ContainsSpecialCharacters(string regNumber)
+{
+    return Regex.IsMatch(regNumber, @"[^\p{L}\p{N}]");
 }
 void MoveVehicle()
 {
@@ -268,10 +291,6 @@ void SaveParkingSpots()
     File.WriteAllText(filepath + "ParkingArray.json", updatedParkingArrayJsonString);
 }
 
-
-// Metod som kontrollerar tillåtna recken
-
-// Metod som kontrollerar om fordon redan finns  -- Tar emot inputsträng, gert tillbaka true eller false. 
 
 // Metod som räknar ut pris för parkering.  -- första 10 minuterna är gratis
 
