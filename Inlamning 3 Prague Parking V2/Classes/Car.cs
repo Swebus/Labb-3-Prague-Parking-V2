@@ -8,8 +8,12 @@ namespace Inlamning_3_Prague_Parking_V2.Classes
 {
     public class Car : Vehicle
     {
-        public int Size { get; } = 2;
+        private int size = 4;
 
+        public override int Size
+        {
+            get { return size; }
+        }
         public Car(string regNumber, DateTime parkingTime)
             : base(regNumber, parkingTime)
         {

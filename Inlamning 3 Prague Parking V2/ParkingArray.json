@@ -1,1 +1,519 @@
-{"size":2,"RegNumber":"aaa111","ParkingTime":"2024-10-22T16:31:03.6899048+02:00","Index":"10,0"}
+[
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [
+      {
+        "RegNumber": "123",
+        "ParkingTime": "2024-10-26T12:34:18.4619193+02:00",
+        "Size": 0
+      }
+    ],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [
+      {
+        "RegNumber": "46",
+        "ParkingTime": "2024-10-26T12:34:21.9889751+02:00",
+        "Size": 0
+      }
+    ],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  },
+  {
+    "parkingSpot": [],
+    "MaxSize": 4,
+    "CurrentSize": 0
+  }
+]
