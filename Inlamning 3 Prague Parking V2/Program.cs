@@ -4,20 +4,35 @@ using System.Text.Json;
 using System.ComponentModel.Design;
 
 string filepath = "../../../";
-
+int oldGarageSize;
 var configValues = ReadConfigTxt();
 
 ParkingGarage pragueParking = new ParkingGarage(configValues.mcPrize, configValues.carPrize, configValues.garageSize);
 
-string parkingJsonString = File.ReadAllText(filepath + "ParkingArray.json");
 
+
+
+
+// OM JSON FILEN KNASAR ===================================
+
+
+
+
+//vvvvvvvvvvvvvvvvv KOMMENTERA BORT DESSA TVÅ RADER vvvvvvvvvvvvvvvvvvvvvvv\\
+string parkingJsonString = File.ReadAllText(filepath + "ParkingArray.json");
 ParkingSpot[] parkeringsPlatser = JsonSerializer.Deserialize<ParkingSpot[]>(parkingJsonString);
 
-//ParkingSpot[] parkeringPlatser = new ParkingSpot[pragueParking.GarageSize];
-//for (int i = 0; i < parkeringPlatser.Length; i++)
+
+//vvvvvvvvvvvvvvvvv UNCOMMENT DETTA vvvvvvvvvvvvvvvvvvvvvvvvvv\\
+
+//ParkingSpot[] parkeringsPlatser = new ParkingSpot[pragueParking.GarageSize];
+//for (int i = 0; i < parkeringsPlatser.Length; i++)
 //{
-//    parkeringPlatser[i] = new ParkingSpot(0);
+//    parkeringsPlatser[i] = new ParkingSpot(0);
 //}
+
+//SEN KÖR PROGRAMMET, OCH FIXA SEN TILLBAKA KOMMENTARERNA SOM DE VAR INNAN\\
+
 
 
 
@@ -67,9 +82,22 @@ while (!exit)
                 MoveVehicle();
                 break;
             }
+        case "Find Vehicle":
+            {
+                break;
+            }
+        case "Reload Config File":
+            {
+                ReloadConfigFile();
+                break;
+            }
         case "Show Parking Spaces":
             {
                 ShowParkingSpaces();
+                break;
+            }
+        case "Show Detailed Spaces":
+            {
                 break;
             }
         case "Close Program":
@@ -169,9 +197,9 @@ void MoveVehicle()
     int currentSpotIndex = -1;
 
     // loop igenom för match regNum
-    for (int i = 1; i < parkeringPlatser.Length; i++)
+    for (int i = 1; i < parkeringsPlatser.Length; i++)
     {
-        var spot = parkeringPlatser[i];
+        var spot = parkeringsPlatser[i];
         vehicleToMove = spot.parkingSpot.FirstOrDefault(Vehicle => Vehicle.RegNumber == regNumber);
         if (vehicleToMove != null)
         {
@@ -196,9 +224,9 @@ void MoveVehicle()
 
         Console.Write("Enter new parking spot number: ");
 
-        if (int.TryParse(Console.ReadLine(), out newSpotIndex) && newSpotIndex > 0 && newSpotIndex < parkeringPlatser.Length)
+        if (int.TryParse(Console.ReadLine(), out newSpotIndex) && newSpotIndex > 0 && newSpotIndex < parkeringsPlatser.Length)
         {
-            var newSpot = parkeringPlatser[newSpotIndex];
+            var newSpot = parkeringsPlatser[newSpotIndex];
 
             if (newSpot.CurrentSize + vehicleToMove.Size <= newSpot.MaxSize)
             {
@@ -274,6 +302,59 @@ void SaveParkingSpots()
 // Metod som kontrollerar om fordon redan finns  -- Tar emot inputsträng, gert tillbaka true eller false. 
 
 // Metod som räknar ut pris för parkering.  -- första 10 minuterna är gratis
+
+
+void ReloadConfigFile()
+{
+    oldGarageSize = pragueParking.GarageSize;
+    bool isEmpty = true;
+
+    for (int i = 0; i <= parkeringsPlatser.Length; i++)
+    {
+        if (parkeringsPlatser[i].CurrentSize > 0)
+        {
+            isEmpty = false;
+            break;
+        }
+    }
+
+    var newConfigValues = ReadConfigTxt();
+
+
+    if ((newConfigValues.garageSize < oldGarageSize) && (isEmpty == false))
+    {
+        ParkingGarage pragueParking = new ParkingGarage(newConfigValues.mcPrize, configValues.carPrize, oldGarageSize);
+        Console.WriteLine("Garage not empty, number of spots remains the same. \n" +
+            "Please empty the garage before decreasing its size.");
+    }
+    else
+    {
+        ParkingGarage newPragueParking = new ParkingGarage(newConfigValues.mcPrize, newConfigValues.carPrize, newConfigValues.garageSize);
+        pragueParking = newPragueParking;
+        ParkingSpot[] newParkeringsPlatser = new ParkingSpot[pragueParking.GarageSize];
+
+        Array.Copy(parkeringsPlatser, newParkeringsPlatser, parkeringsPlatser.Length);
+
+        for (int i = parkeringsPlatser.Length; i < newParkeringsPlatser.Length; i++)
+        {
+            newParkeringsPlatser[i] = new ParkingSpot(0);
+        }
+        parkeringsPlatser = newParkeringsPlatser;
+
+        //ParkingSpot[] parkeringsPlatser = new ParkingSpot[pragueParking.GarageSize];
+
+        //for (int i = 0; i < originalArray.Length; i++) 
+        //{
+        //    parkeringsPlatser[i] = originalArray[i];
+        //}
+        //for (int i = originalArray.Length; i < parkeringsPlatser.Length; i++)
+        //{
+        //    parkeringsPlatser[i] = new ParkingSpot(0);
+        //}
+
+    }
+    SaveParkingSpots();
+}
 
 
 
