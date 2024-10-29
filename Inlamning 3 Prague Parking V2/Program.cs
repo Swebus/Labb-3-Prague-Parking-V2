@@ -236,11 +236,11 @@ void GetVehicle()
     double price = 0;
     if (parkingDuration.TotalMinutes > 10)
     {
-        if (vehicleToRemove is Car)
+        if (vehicleToRemove.Size == 4)
         {
             price = (parkingDuration.TotalMinutes - 10) * pragueParking.CarPrize / 60;
         }
-        else if (vehicleToRemove is Mc)
+        else if (vehicleToRemove.Size == 2)
         {
             price = (parkingDuration.TotalMinutes - 10) * pragueParking.McPrize / 60;
         }
