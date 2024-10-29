@@ -361,17 +361,6 @@ void ReloadConfigFile()
         }
         parkeringsPlatser = newParkeringsPlatser;
 
-        //ParkingSpot[] parkeringsPlatser = new ParkingSpot[pragueParking.GarageSize];
-
-        //for (int i = 0; i < originalArray.Length; i++) 
-        //{
-        //    parkeringsPlatser[i] = originalArray[i];
-        //}
-        //for (int i = originalArray.Length; i < parkeringsPlatser.Length; i++)
-        //{
-        //    parkeringsPlatser[i] = new ParkingSpot(0);
-        //}
-
     }
     SaveParkingSpots();
 }
