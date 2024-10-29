@@ -160,8 +160,6 @@ string GetRegNumber()
 
 
 } 
-// Metod som kontrollerar tillåtna recken
-// Metod som kontrollerar om fordon redan finns  -- Tar emot inputsträng, gert tillbaka true eller false. 
 bool ContainsSpecialCharacters(string regNumber)
 {
     return Regex.IsMatch(regNumber, @"[^\p{L}\p{N}]");
