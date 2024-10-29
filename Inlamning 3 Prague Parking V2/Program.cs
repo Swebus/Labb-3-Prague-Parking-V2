@@ -181,8 +181,6 @@ string GetRegNumber()
 
 
 } 
-// Metod som kontrollerar tillåtna recken
-// Metod som kontrollerar om fordon redan finns  -- Tar emot inputsträng, gert tillbaka true eller false. 
 bool ContainsSpecialCharacters(string regNumber)
 {
     return Regex.IsMatch(regNumber, @"[^\p{L}\p{N}]");
@@ -446,17 +444,6 @@ void ReloadConfigFile()
             newParkeringsPlatser[i] = new ParkingSpot(0);
         }
         parkeringsPlatser = newParkeringsPlatser;
-
-        //ParkingSpot[] parkeringsPlatser = new ParkingSpot[pragueParking.GarageSize];
-
-        //for (int i = 0; i < originalArray.Length; i++) 
-        //{
-        //    parkeringsPlatser[i] = originalArray[i];
-        //}
-        //for (int i = originalArray.Length; i < parkeringsPlatser.Length; i++)
-        //{
-        //    parkeringsPlatser[i] = new ParkingSpot(0);
-        //}
 
     }
     SaveParkingSpots();
