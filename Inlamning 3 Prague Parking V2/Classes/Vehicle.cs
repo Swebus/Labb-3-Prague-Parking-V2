@@ -11,7 +11,7 @@ namespace Inlamning_3_Prague_Parking_V2.Classes
         public string RegNumber { get; set; }
         public DateTime ParkingTime { get; set; }
         //public string Index { get; set; }
-        public virtual int Size { get; }
+        public virtual int Size { get; set; }
         public Vehicle(string regNumber, DateTime parkingTime)
         {
             RegNumber = regNumber;

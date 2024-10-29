@@ -6,20 +6,26 @@ using System.Text.RegularExpressions;
 using System.Reflection.Metadata.Ecma335;
 
 string filepath = "../../../";
-
+//int oldGarageSize;
 var configValues = ReadConfigTxt();
-
 ParkingGarage pragueParking = new ParkingGarage(configValues.mcPrize, configValues.carPrize, configValues.garageSize);
 
-string parkingJsonString = File.ReadAllText(filepath + "ParkingArray.json");
-
-ParkingSpot[] parkeringsPlatser = JsonSerializer.Deserialize<ParkingSpot[]>(parkingJsonString);
-
-//ParkingSpot[] parkeringPlatser = new ParkingSpot[pragueParking.GarageSize];
-//for (int i = 0; i < parkeringPlatser.Length; i++)
-//{
-//    parkeringPlatser[i] = new ParkingSpot(0);
-//}
+ParkingSpot[] parkeringsPlatser;
+if (File.Exists(filepath + "ParkingArray.json"))
+{
+    string parkingJsonString = File.ReadAllText(filepath + "ParkingArray.json");
+    parkeringsPlatser = JsonSerializer.Deserialize<ParkingSpot[]>(parkingJsonString);
+}
+else
+{
+    parkeringsPlatser = new ParkingSpot[pragueParking.GarageSize];
+    for (int i = 0; i < parkeringsPlatser.Length; i++)
+    {
+        parkeringsPlatser[i] = new ParkingSpot(0);
+    }
+    SaveParkingSpots();
+}
+ReloadConfigFile();
 
 
 
@@ -61,7 +67,7 @@ while (!exit)
             }
         case "Get Vehicle":
             {
-               // GetVehicle();
+                GetVehicle();
                 break;
             }
         case "Move Vehicle":
@@ -69,9 +75,22 @@ while (!exit)
                 MoveVehicle();
                 break;
             }
+        case "Find Vehicle":
+            {
+                break;
+            }
+        case "Reload Config File":
+            {
+                ReloadConfigFile();
+                break;
+            }
         case "Show Parking Spaces":
             {
                 ShowParkingSpaces();
+                break;
+            }
+        case "Show Detailed Spaces":
+            {
                 break;
             }
         case "Close Program":
@@ -87,6 +106,8 @@ while (!exit)
         Console.Clear();
     }
 }
+
+
 
 
 
@@ -164,6 +185,88 @@ bool ContainsSpecialCharacters(string regNumber)
 {
     return Regex.IsMatch(regNumber, @"[^\p{L}\p{N}]");
 }
+
+void GetVehicle()
+{
+    string regNumber;
+
+    // Be om registreringsnummer
+    do
+    {
+        Console.Write("Enter vehicle registration number or type 'exit' to return: ");
+        regNumber = Console.ReadLine()?.Trim();
+
+        if (string.IsNullOrEmpty(regNumber))
+        {
+            Console.WriteLine("Invalid input, please try again.");
+        }
+        else if (regNumber.ToLower() == "exit")
+        {
+            Console.WriteLine("Exiting to main menu...");
+            return;
+        }
+    } while (string.IsNullOrEmpty(regNumber));
+
+    // Leta upp fordonet i parkeringsplatserna
+    ParkingSpot currentSpot = null;
+    Vehicle vehicleToRemove = null;
+    int currentSpotIndex = -1;
+
+    for (int i = 1; i < parkeringsPlatser.Length; i++)
+    {
+        var spot = parkeringsPlatser[i];
+        vehicleToRemove = spot.parkingSpot.FirstOrDefault(v => v.RegNumber == regNumber);
+
+        if (vehicleToRemove != null)
+        {
+            currentSpot = spot;
+            currentSpotIndex = i;
+            break;
+        }
+    }
+
+    if (currentSpot == null || vehicleToRemove == null)
+    {
+        Console.WriteLine($"No vehicle with registration number {regNumber} found.");
+        return;
+    }
+
+    // Beräkna parkeringstid och eventuella kostnader
+    DateTime currentTime = DateTime.Now;
+    TimeSpan parkingDuration = currentTime - vehicleToRemove.ParkingTime;
+
+    // Anta att de första 10 minuterna är gratis
+    double price = 0;
+    if (parkingDuration.TotalMinutes > 10)
+    {
+        if (vehicleToRemove is Car)
+        {
+            price = (parkingDuration.TotalMinutes - 10) * pragueParking.CarPrize / 60;
+        }
+        else if (vehicleToRemove is Mc)
+        {
+            price = (parkingDuration.TotalMinutes - 10) * pragueParking.McPrize / 60;
+        }
+    }
+
+    Console.WriteLine($"Parking duration: {parkingDuration.TotalMinutes:F1} minutes.");
+    Console.WriteLine($"Parking cost: {price}CZK");
+
+    // Bekräfta om användaren vill ta bort fordonet
+    var confirm = AnsiConsole.Confirm("Do you want to retrieve and remove the vehicle?", true);
+    if (confirm)
+    {
+        // Ta bort fordonet från nuvarande parkeringsplats
+        currentSpot.parkingSpot.Remove(vehicleToRemove);
+        currentSpot.CurrentSize -= vehicleToRemove.Size;
+
+        Console.WriteLine($"Vehicle {regNumber} has been retrieved from spot {currentSpotIndex}.");
+
+        // Spara uppdaterade parkeringsplatser till JSON-filen
+        SaveParkingSpots();
+    }
+}
+
 void MoveVehicle()
 {
     string regNumber;
@@ -248,6 +351,45 @@ void MoveVehicle()
         }
     } while (isValidtoCheckOut);
 }
+
+void GetVehicle()
+{
+    Console.Write("Enter the registration number of the vehicle to retrieve: ");
+    string regNumber = Console.ReadLine().ToUpper().Trim(); // Normalize input for comparison
+
+    bool found = false;
+
+    for (int i = 1; i < vehicleList.GetLength(0); i++)
+    {
+        if (vehicleList[i, 0]?.RegNumber == regNumber)
+        {
+            Console.WriteLine($"Vehicle {regNumber} found in spot {i}. Retrieving...");
+            vehicleList[i, 0] = null; // Remove vehicle from the first slot
+            found = true;
+            break;
+        }
+        if (vehicleList[i, 1]?.RegNumber == regNumber)
+        {
+            Console.WriteLine($"Vehicle {regNumber} found in spot {i}. Retrieving...");
+            vehicleList[i, 1] = null; // Remove vehicle from the second slot
+            found = true;
+            break;
+        }
+    }
+
+    if (!found)
+    {
+        Console.WriteLine("Vehicle not found.");
+    }
+    else
+    {
+        Console.WriteLine("Vehicle retrieved successfully.");
+    }
+
+    Console.Write("Press a key to continue...");
+    Console.ReadKey();
+}
+
 void ShowParkingSpaces()
 {
 
@@ -291,6 +433,58 @@ void SaveParkingSpots()
 
 
 // Metod som räknar ut pris för parkering.  -- första 10 minuterna är gratis
+
+
+void ReloadConfigFile()
+{
+    //oldGarageSize = parkeringsPlatser.Length;
+    bool isEmpty = true;
+
+    for (int i = 0; i < parkeringsPlatser.Length; i++)
+    {
+        if (parkeringsPlatser[i].CurrentSize > 0)
+        {
+            isEmpty = false;
+            break;
+        }
+    }
+
+    var newConfigValues = ReadConfigTxt();
+
+
+    if ((newConfigValues.garageSize < parkeringsPlatser.Length) && (isEmpty == false))
+    {
+        ParkingGarage pragueParking = new ParkingGarage(newConfigValues.mcPrize, configValues.carPrize, parkeringsPlatser.Length);
+        Console.WriteLine("Garage not empty, number of spots remains the same. \n" +
+            "Please empty the garage before decreasing its size.");
+    }
+    else if((newConfigValues.garageSize < parkeringsPlatser.Length) && (isEmpty == true))
+    {
+        ParkingGarage newPragueParking = new ParkingGarage(newConfigValues.mcPrize, newConfigValues.carPrize, newConfigValues.garageSize);
+        pragueParking = newPragueParking;
+        parkeringsPlatser = new ParkingSpot[pragueParking.GarageSize];
+        for (int i = 0; i < parkeringsPlatser.Length; i++)
+        {
+            parkeringsPlatser[i] = new ParkingSpot(0);
+        }
+    }
+    else
+    {
+        ParkingGarage newPragueParking = new ParkingGarage(newConfigValues.mcPrize, newConfigValues.carPrize, newConfigValues.garageSize);
+        pragueParking = newPragueParking;
+        ParkingSpot[] newParkeringsPlatser = new ParkingSpot[pragueParking.GarageSize];
+
+        Array.Copy(parkeringsPlatser, newParkeringsPlatser, parkeringsPlatser.Length);
+
+        for (int i = parkeringsPlatser.Length; i < newParkeringsPlatser.Length; i++)
+        {
+            newParkeringsPlatser[i] = new ParkingSpot(0);
+        }
+        parkeringsPlatser = newParkeringsPlatser;
+
+    }
+    SaveParkingSpots();
+}
 
 
 
