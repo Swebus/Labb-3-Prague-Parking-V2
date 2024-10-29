@@ -32,21 +32,13 @@ ReloadConfigFile();
 bool exit = false;
 while (!exit)
 {
-    AnsiConsole.Write(
-    new FigletText("Prague Parking")
-        .Centered()
-        .Color(Color.Red));
-    Console.WriteLine("\n\n\n");
-
-    var table2 = new Table();
-    table2.AddColumn("Vehicle type: ");
-    table2.AddColumn(new TableColumn("Price/H: ").Centered());
-    table2.AddRow("Free", "10 min");
-    table2.AddRow("Mc", "10 CZK/H");
-    table2.AddRow("Car", "20 CZK/H");
+    FigletPagrueParking();
     
-    AnsiConsole.Write(table2.SimpleBorder().Centered());
-    Console.WriteLine("\n\n\n");
+    TableStatusVehicle();
+
+    ShowParkingSpaces();
+   
+    TablePriceMeny();
 
 
     // Main menu selections
@@ -55,15 +47,15 @@ while (!exit)
             .PageSize(8)
             .AddChoices(new[] {
             "Park Vehicle",
-            "Get Vehicle",       
-            "Move Vehicle",        
-            "Find Vehicle",        
-            "Reload Config File",     
+            "Get Vehicle",
+            "Move Vehicle",
+            "Find Vehicle",
+            "Reload Config File",
             "Show Parking Spaces",
             "Show Detailed Spaces",
             "Close Program",
             }));
-    
+
 
     // Selection switch
     switch (selection)
@@ -109,7 +101,7 @@ while (!exit)
     }
     if (!exit)
     {
-        var table1 = new Table();  
+        var table1 = new Table();
         table1.AddColumn("[yellow]Press enter to return to Main Menu.[/]");
         AnsiConsole.Write(table1);
         Console.ReadKey();
@@ -397,7 +389,6 @@ void SaveParkingSpots()
     string updatedParkingArrayJsonString = JsonSerializer.Serialize(parkeringsPlatser, new JsonSerializerOptions { WriteIndented = true });
     File.WriteAllText(filepath + "ParkingArray.json", updatedParkingArrayJsonString);
 }
-// Metod som räknar ut pris för parkering.  -- första 10 minuterna är gratis
 void ReloadConfigFile()
 {
     //oldGarageSize = parkeringsPlatser.Length;
@@ -472,10 +463,33 @@ void ReloadConfigFile()
     return (mcPrize, carPrize, garageSize);
 }
 
+static void FigletPagrueParking()
+{
+    AnsiConsole.Write(
+        new FigletText("Prague Parking")
+            .Centered()
+            .Color(Color.Red));
+    Console.WriteLine("\n\n");
+}
 
+static void TableStatusVehicle()
+{
+    Table table = new Table();
+    table.AddColumns("[grey]EMPTY SPOT =[/] [green]GREEN[/]",
+                            "[grey]HALF FULL =[/] [yellow]YELLOW[/]",
+                            "[grey]FULL SPOT =[/] [red]RED[/]")
+                            .Collapse();
+    AnsiConsole.Write(table);
+}
 
+static void TablePriceMeny()
+{
+    var table = new Table();
+    table.AddColumn("Vehicle type: ");
+    table.AddColumn(new TableColumn("Price/H: ").Centered());
+    table.AddRow("Free", "10 min");
+    table.AddRow("Mc", "10 CZK/H");
+    table.AddRow("Car", "20 CZK/H");
 
-
-
-
-
+    AnsiConsole.Write(table.SimpleBorder().Alignment(Justify.Left));
+}
