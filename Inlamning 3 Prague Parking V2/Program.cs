@@ -32,14 +32,14 @@ ReloadConfigFile();
 bool exit = false;
 while (!exit)
 {
+
     AnsiConsole.Write(
     new FigletText("Prague Parking")
         .Centered()
         .Color(Color.Red));
     Console.WriteLine("\n\n\n\n\n");
 
-
-
+    ShowParkingSpaces();
 
     // Main menu selections
     var selection = AnsiConsole.Prompt(
@@ -55,7 +55,6 @@ while (!exit)
             "Show Detailed Spaces",
             "Close Program",
             }));
-    
 
     // Selection switch
     switch (selection)
@@ -198,7 +197,7 @@ void GetVehicle()
         if (string.IsNullOrEmpty(regNumber))
         {
             var table2 = new Table();
-            table2.AddColumn("[yellow]We cannot find a vehicle that registration number here. [/]");
+            table2.AddColumn("[yellow]Vehicle not found. Returning to main menu. [/]");
             AnsiConsole.Write(table2);
             return;
         }
@@ -276,7 +275,7 @@ void MoveVehicle()
         {
             
             var table2 = new Table();
-            table2.AddColumn("[yellow]We cannot find a vehicle that registration number here. [/]");
+            table2.AddColumn("[yellow]Vehicle not found. Returning to main menu. [/]");
             AnsiConsole.Write(table2);
             return;
         }
