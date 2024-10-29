@@ -47,10 +47,10 @@ while (!exit)
             .PageSize(8)
             .AddChoices(new[] {
             "Park Vehicle",
-            "Get Vehicle",        //Sigrid
-            "Move Vehicle",        //RObert
-            "Find Vehicle",        //Omeed
-            "Reload Config File",      //Sebastian
+            "Get Vehicle",       
+            "Move Vehicle",        
+            "Find Vehicle",        
+            "Reload Config File",     
             "Show Parking Spaces",
             "Show Detailed Spaces",
             "Close Program",
@@ -101,7 +101,9 @@ while (!exit)
     }
     if (!exit)
     {
-        Console.Write("\nPress a key to continue: . . . ");
+        var table1 = new Table();  
+        table1.AddColumn("[yellow]Press enter to return to Main Menu.[/]");
+        AnsiConsole.Write(table1);
         Console.ReadKey();
         Console.Clear();
     }
@@ -164,7 +166,7 @@ string GetRegNumber()
 
         if (string.IsNullOrEmpty(regNumber) | (regNumber.Length < 1) | (regNumber.Length > 10 | ContainsSpecialCharacters(regNumber)))
         {
-            Console.WriteLine("Invalid, please try again.)");
+            Console.WriteLine("\nInvalid, please try again.");
             continue;
         }
         bool regNumberExists = parkeringsPlatser.Any(spot => spot.ContainsVehicle(regNumber));
@@ -185,24 +187,19 @@ bool ContainsSpecialCharacters(string regNumber)
 {
     return Regex.IsMatch(regNumber, @"[^\p{L}\p{N}]");
 }
-
 void GetVehicle()
 {
     string regNumber;
-
     // Be om registreringsnummer
     do
     {
-        Console.Write("Enter vehicle registration number or type 'exit' to return: ");
-        regNumber = Console.ReadLine()?.Trim();
-
+        Console.WriteLine("Enter Registration Number:  ");
+        regNumber = Console.ReadLine().Trim();
         if (string.IsNullOrEmpty(regNumber))
         {
-            Console.WriteLine("Invalid input, please try again.");
-        }
-        else if (regNumber.ToLower() == "exit")
-        {
-            Console.WriteLine("Exiting to main menu...");
+            var table2 = new Table();
+            table2.AddColumn("[yellow]We cannot find a vehicle that registration number here. [/]");
+            AnsiConsole.Write(table2);
             return;
         }
     } while (string.IsNullOrEmpty(regNumber));
@@ -266,25 +263,23 @@ void GetVehicle()
         SaveParkingSpots();
     }
 }
-
 void MoveVehicle()
+
 {
     string regNumber;
 
     do
     {
-        Console.WriteLine("Enter Registration Number or exit for exit: ");
-        regNumber = Console.ReadLine()?.Trim();
+        Console.WriteLine("Enter Registration Number:  ");
+        regNumber = Console.ReadLine().Trim();
         if (string.IsNullOrEmpty(regNumber))
         {
-            Console.WriteLine("Invalid, please try again or type exit: ");
-        }
-        else if (regNumber.ToLower() == "exit")
-        {
-            Console.WriteLine("Exit, back to Main Meny");
+            
+            var table2 = new Table();
+            table2.AddColumn("[yellow]We cannot find a vehicle that registration number here. [/]");
+            AnsiConsole.Write(table2);
             return;
         }
-
     } while (string.IsNullOrEmpty(regNumber));
 
 
@@ -307,7 +302,10 @@ void MoveVehicle()
 
     if (currentSpot == null)
     {
-        Console.WriteLine($"Vehicle with registration number {regNumber} not found.");
+
+        var table3 = new Table();
+        table3.AddColumn($"[yellow]Vehicle with registration nummber {regNumber} not found.[/]");
+        AnsiConsole.Write(table3);
         return;
     }
 
@@ -351,45 +349,6 @@ void MoveVehicle()
         }
     } while (isValidtoCheckOut);
 }
-
-void GetVehicle()
-{
-    Console.Write("Enter the registration number of the vehicle to retrieve: ");
-    string regNumber = Console.ReadLine().ToUpper().Trim(); // Normalize input for comparison
-
-    bool found = false;
-
-    for (int i = 1; i < vehicleList.GetLength(0); i++)
-    {
-        if (vehicleList[i, 0]?.RegNumber == regNumber)
-        {
-            Console.WriteLine($"Vehicle {regNumber} found in spot {i}. Retrieving...");
-            vehicleList[i, 0] = null; // Remove vehicle from the first slot
-            found = true;
-            break;
-        }
-        if (vehicleList[i, 1]?.RegNumber == regNumber)
-        {
-            Console.WriteLine($"Vehicle {regNumber} found in spot {i}. Retrieving...");
-            vehicleList[i, 1] = null; // Remove vehicle from the second slot
-            found = true;
-            break;
-        }
-    }
-
-    if (!found)
-    {
-        Console.WriteLine("Vehicle not found.");
-    }
-    else
-    {
-        Console.WriteLine("Vehicle retrieved successfully.");
-    }
-
-    Console.Write("Press a key to continue...");
-    Console.ReadKey();
-}
-
 void ShowParkingSpaces()
 {
 
@@ -430,11 +389,7 @@ void SaveParkingSpots()
     string updatedParkingArrayJsonString = JsonSerializer.Serialize(parkeringsPlatser, new JsonSerializerOptions { WriteIndented = true });
     File.WriteAllText(filepath + "ParkingArray.json", updatedParkingArrayJsonString);
 }
-
-
 // Metod som räknar ut pris för parkering.  -- första 10 minuterna är gratis
-
-
 void ReloadConfigFile()
 {
     //oldGarageSize = parkeringsPlatser.Length;
@@ -485,9 +440,6 @@ void ReloadConfigFile()
     }
     SaveParkingSpots();
 }
-
-
-
 (int mcPrize, int carPrize, int garageSize) ReadConfigTxt()
 {
     var configValues = new Dictionary<string, int>();
