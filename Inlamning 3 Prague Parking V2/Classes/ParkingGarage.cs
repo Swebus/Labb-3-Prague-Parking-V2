@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spectre.Console;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,6 @@ namespace Inlamning_3_Prague_Parking_V2.Classes
             CarPrize = carPrize;
             GarageSize = garageSize;
         }
-        
-    }
+
+    } 
 }
