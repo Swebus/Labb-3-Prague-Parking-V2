@@ -37,9 +37,17 @@ while (!exit)
     new FigletText("Prague Parking")
         .Centered()
         .Color(Color.Red));
-    Console.WriteLine("\n\n\n\n\n");
+    Console.WriteLine("\n\n\n");
 
-    ShowParkingSpaces();
+    var table2 = new Table();
+    table2.AddColumn("Vehicle type: ");
+    table2.AddColumn(new TableColumn("Price/H: ").Centered());
+    table2.AddRow("Free", "10 min");
+    table2.AddRow("Mc", "10 CZK/H");
+    table2.AddRow("Car", "20 CZK/H");
+    
+    AnsiConsole.Write(table2.SimpleBorder().Centered());
+    Console.WriteLine("\n\n\n");
 
     // Main menu selections
     var selection = AnsiConsole.Prompt(
