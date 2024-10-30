@@ -197,9 +197,9 @@ void GetVehicle()
         regNumber = Console.ReadLine().Trim();
         if (string.IsNullOrEmpty(regNumber))
         {
-            var table2 = new Table();
-            table2.AddColumn("[yellow]We cannot find a vehicle that registration number here. [/]");
-            AnsiConsole.Write(table2);
+            var table = new Table();
+            table.AddColumn("[yellow]We cannot find a vehicle that registration number here. [/]");
+            AnsiConsole.Write(table);
             return;
         }
     } while (string.IsNullOrEmpty(regNumber));
@@ -250,8 +250,10 @@ void GetVehicle()
     Console.WriteLine($"Parking cost: {price}CZK");
 
     // Bekräfta om användaren vill ta bort fordonet
-    var confirm = AnsiConsole.Confirm("Do you want to retrieve and remove the vehicle?", true);
-    if (confirm)
+    Console.WriteLine("Do you want to retrieve and remove the vehicle?");
+    var confirm = AnsiConsole.Prompt(new SelectionPrompt<string>()
+         .PageSize(4).AddChoices(new[] { "Yes", "No" }));
+    if (confirm == "Yes")
     {
         // Ta bort fordonet från nuvarande parkeringsplats
         currentSpot.parkingSpot.Remove(vehicleToRemove);
@@ -463,6 +465,9 @@ void ReloadConfigFile()
     return (mcPrize, carPrize, garageSize);
 }
 
+
+// Top MainMeny Design
+#region 
 static void FigletPagrueParking()
 {
     AnsiConsole.Write(
@@ -471,7 +476,6 @@ static void FigletPagrueParking()
             .Color(Color.Red));
     Console.WriteLine("\n\n");
 }
-
 static void TableStatusVehicle()
 {
     Table table = new Table();
@@ -481,7 +485,6 @@ static void TableStatusVehicle()
                             .Collapse();
     AnsiConsole.Write(table);
 }
-
 static void TablePriceMeny()
 {
     var table = new Table();
@@ -493,3 +496,4 @@ static void TablePriceMeny()
 
     AnsiConsole.Write(table.SimpleBorder().Alignment(Justify.Left));
 }
+#endregion
