@@ -351,6 +351,106 @@ void MoveVehicle()
         }
     } while (isValidtoCheckOut);
 }
+
+void FindVehicle()
+{
+    Console.Write("To find vehicle enter regnumber");
+    String regnumber = Console.ReadLine()?.Trim().ToUpper();
+    bool found = false;
+    for (int i = 0; i < parkeringsPlatser.Length; i++)
+    {
+        var Spot = parkeringsPlatser[i];
+        var vehicle = Spot?.parkingSpot.FirstOrDefault(v => v.RegNumber == regnumber);
+        if (vehicle !=null)
+        {
+            DateTime currentTime= DateTime.Now;
+            TimeSpan duration = currentTime - vehicle.ParkingTime;
+            double price = CalculateParkingCost(vehicle, duration);
+
+            Console.WriteLine($" Vehicle found in parkingspot { i+1}.");
+            Console.WriteLine($" Park Duration:{duration.TotalMinutes:F1} minutes");
+            Console.WriteLine($" Parking Cost {price:F2} CZK");
+            found = true;
+            break; 
+        }
+
+    }
+    if (!found)
+    {
+        Console.WriteLine("Vehicle not found.");
+    }
+}
+
+double CalculateParkingCost(Vehicle vehicle, TimeSpan duration) 
+{ const double freetime = 10;
+    const double hourlyRateCar = 20.0;
+    const double hourlyRateMc = 10.0;
+
+if( duration.TotalMinutes <= freetime )
+{
+        return 0;
+}
+else
+{ double rate = vehicle is Car ? hourlyRateCar : hourlyRateMc;
+        return ((duration.TotalMinutes - freetime) / 60) * rate;
+ 
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+void GetVehicle()
+{
+    Console.Write("Enter the registration number of the vehicle to retrieve: ");
+    string regNumber = Console.ReadLine().ToUpper().Trim(); // Normalize input for comparison
+
+    bool found = false;
+
+    for (int i = 1; i < vehicleList.GetLength(0); i++)
+    {
+        if (vehicleList[i, 0]?.RegNumber == regNumber)
+        {
+            Console.WriteLine($"Vehicle {regNumber} found in spot {i}. Retrieving...");
+            vehicleList[i, 0] = null; // Remove vehicle from the first slot
+            found = true;
+            break;
+        }
+        if (vehicleList[i, 1]?.RegNumber == regNumber)
+        {
+            Console.WriteLine($"Vehicle {regNumber} found in spot {i}. Retrieving...");
+            vehicleList[i, 1] = null; // Remove vehicle from the second slot
+            found = true;
+            break;
+        }
+    }
+
+    if (!found)
+    {
+        Console.WriteLine("Vehicle not found.");
+    }
+    else
+    {
+        Console.WriteLine("Vehicle retrieved successfully.");
+    }
+
+    Console.Write("Press a key to continue...");
+    Console.ReadKey();
+}
+
 void ShowParkingSpaces()
 {
 
