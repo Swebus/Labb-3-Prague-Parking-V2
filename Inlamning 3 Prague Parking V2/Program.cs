@@ -101,9 +101,9 @@ while (!exit)
     }
     if (!exit)
     {
-        var table1 = new Table();
-        table1.AddColumn("[yellow]Press enter to return to Main Menu.[/]");
-        AnsiConsole.Write(table1);
+        var table = new Table();
+        table.AddColumn("[yellow]Press enter to return to Main Menu.[/]");
+        AnsiConsole.Write(table);
         Console.ReadKey();
         Console.Clear();
     }
