@@ -398,59 +398,6 @@ else
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
-void GetVehicle()
-{
-    Console.Write("Enter the registration number of the vehicle to retrieve: ");
-    string regNumber = Console.ReadLine().ToUpper().Trim(); // Normalize input for comparison
-
-    bool found = false;
-
-    for (int i = 1; i < vehicleList.GetLength(0); i++)
-    {
-        if (vehicleList[i, 0]?.RegNumber == regNumber)
-        {
-            Console.WriteLine($"Vehicle {regNumber} found in spot {i}. Retrieving...");
-            vehicleList[i, 0] = null; // Remove vehicle from the first slot
-            found = true;
-            break;
-        }
-        if (vehicleList[i, 1]?.RegNumber == regNumber)
-        {
-            Console.WriteLine($"Vehicle {regNumber} found in spot {i}. Retrieving...");
-            vehicleList[i, 1] = null; // Remove vehicle from the second slot
-            found = true;
-            break;
-        }
-    }
-
-    if (!found)
-    {
-        Console.WriteLine("Vehicle not found.");
-    }
-    else
-    {
-        Console.WriteLine("Vehicle retrieved successfully.");
-    }
-
-    Console.Write("Press a key to continue...");
-    Console.ReadKey();
-}
-
 void ShowParkingSpaces()
 {
 
