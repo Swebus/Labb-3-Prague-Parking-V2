@@ -32,13 +32,13 @@ ReloadConfigFile();
 bool exit = false;
 while (!exit)
 {
-    AnsiConsole.Write(
-    new FigletText("Prague Parking")
-        .Centered()
-        .Color(Color.Red));
-    Console.WriteLine("\n\n\n\n\n");
+    FigletPagrueParking();
+    
+    TableStatusVehicle();
 
-
+    ShowParkingSpaces();
+   
+    TablePriceMeny();
 
 
     // Main menu selections
@@ -47,15 +47,15 @@ while (!exit)
             .PageSize(8)
             .AddChoices(new[] {
             "Park Vehicle",
-            "Get Vehicle",        //Sigrid
-            "Move Vehicle",        //RObert
-            "Find Vehicle",        //Omeed
-            "Reload Config File",      //Sebastian
+            "Get Vehicle",
+            "Move Vehicle",
+            "Find Vehicle",
+            "Reload Config File",
             "Show Parking Spaces",
             "Show Detailed Spaces",
             "Close Program",
             }));
-    
+
 
     // Selection switch
     switch (selection)
@@ -101,7 +101,9 @@ while (!exit)
     }
     if (!exit)
     {
-        Console.Write("\nPress a key to continue: . . . ");
+        var table1 = new Table();
+        table1.AddColumn("[yellow]Press enter to return to Main Menu.[/]");
+        AnsiConsole.Write(table1);
         Console.ReadKey();
         Console.Clear();
     }
@@ -164,7 +166,7 @@ string GetRegNumber()
 
         if (string.IsNullOrEmpty(regNumber) | (regNumber.Length < 1) | (regNumber.Length > 10 | ContainsSpecialCharacters(regNumber)))
         {
-            Console.WriteLine("Invalid, please try again.)");
+            Console.WriteLine("\nInvalid, please try again.");
             continue;
         }
         bool regNumberExists = parkeringsPlatser.Any(spot => spot.ContainsVehicle(regNumber));
@@ -181,30 +183,23 @@ string GetRegNumber()
 
 
 } 
-// Metod som kontrollerar tillåtna recken
-// Metod som kontrollerar om fordon redan finns  -- Tar emot inputsträng, gert tillbaka true eller false. 
 bool ContainsSpecialCharacters(string regNumber)
 {
     return Regex.IsMatch(regNumber, @"[^\p{L}\p{N}]");
 }
-
 void GetVehicle()
 {
     string regNumber;
-
     // Be om registreringsnummer
     do
     {
-        Console.Write("Enter vehicle registration number or type 'exit' to return: ");
-        regNumber = Console.ReadLine()?.Trim();
-
+        Console.WriteLine("Enter Registration Number:  ");
+        regNumber = Console.ReadLine().Trim();
         if (string.IsNullOrEmpty(regNumber))
         {
-            Console.WriteLine("Invalid input, please try again.");
-        }
-        else if (regNumber.ToLower() == "exit")
-        {
-            Console.WriteLine("Exiting to main menu...");
+            var table2 = new Table();
+            table2.AddColumn("[yellow]Vehicle not found. Returning to main menu. [/]");
+            AnsiConsole.Write(table2);
             return;
         }
     } while (string.IsNullOrEmpty(regNumber));
@@ -241,11 +236,11 @@ void GetVehicle()
     double price = 0;
     if (parkingDuration.TotalMinutes > 10)
     {
-        if (vehicleToRemove is Car)
+        if (vehicleToRemove.Size == 4)
         {
             price = (parkingDuration.TotalMinutes - 10) * pragueParking.CarPrize / 60;
         }
-        else if (vehicleToRemove is Mc)
+        else if (vehicleToRemove.Size == 2)
         {
             price = (parkingDuration.TotalMinutes - 10) * pragueParking.McPrize / 60;
         }
@@ -255,8 +250,10 @@ void GetVehicle()
     Console.WriteLine($"Parking cost: {price}CZK");
 
     // Bekräfta om användaren vill ta bort fordonet
-    var confirm = AnsiConsole.Confirm("Do you want to retrieve and remove the vehicle?", true);
-    if (confirm)
+    Console.WriteLine("Do you want to retrieve and remove the vehicle?");
+    var confirm = AnsiConsole.Prompt(new SelectionPrompt<string>()
+         .PageSize(4).AddChoices(new[] { "Yes", "No" }));
+    if (confirm == "Yes")
     {
         // Ta bort fordonet från nuvarande parkeringsplats
         currentSpot.parkingSpot.Remove(vehicleToRemove);
@@ -268,25 +265,23 @@ void GetVehicle()
         SaveParkingSpots();
     }
 }
-
 void MoveVehicle()
+
 {
     string regNumber;
 
     do
     {
-        Console.WriteLine("Enter Registration Number or exit for exit: ");
-        regNumber = Console.ReadLine()?.Trim();
+        Console.WriteLine("Enter Registration Number:  ");
+        regNumber = Console.ReadLine().Trim();
         if (string.IsNullOrEmpty(regNumber))
         {
-            Console.WriteLine("Invalid, please try again or type exit: ");
-        }
-        else if (regNumber.ToLower() == "exit")
-        {
-            Console.WriteLine("Exit, back to Main Meny");
+            
+            var table2 = new Table();
+            table2.AddColumn("[yellow]Vehicle not found. Returning to main menu. [/]");
+            AnsiConsole.Write(table2);
             return;
         }
-
     } while (string.IsNullOrEmpty(regNumber));
 
 
@@ -309,7 +304,10 @@ void MoveVehicle()
 
     if (currentSpot == null)
     {
-        Console.WriteLine($"Vehicle with registration number {regNumber} not found.");
+
+        var table3 = new Table();
+        table3.AddColumn($"[yellow]Vehicle with registration nummber {regNumber} not found.[/]");
+        AnsiConsole.Write(table3);
         return;
     }
 
@@ -493,11 +491,6 @@ void SaveParkingSpots()
     string updatedParkingArrayJsonString = JsonSerializer.Serialize(parkeringsPlatser, new JsonSerializerOptions { WriteIndented = true });
     File.WriteAllText(filepath + "ParkingArray.json", updatedParkingArrayJsonString);
 }
-
-
-// Metod som räknar ut pris för parkering.  -- första 10 minuterna är gratis
-
-
 void ReloadConfigFile()
 {
     //oldGarageSize = parkeringsPlatser.Length;
@@ -545,23 +538,9 @@ void ReloadConfigFile()
         }
         parkeringsPlatser = newParkeringsPlatser;
 
-        //ParkingSpot[] parkeringsPlatser = new ParkingSpot[pragueParking.GarageSize];
-
-        //for (int i = 0; i < originalArray.Length; i++) 
-        //{
-        //    parkeringsPlatser[i] = originalArray[i];
-        //}
-        //for (int i = originalArray.Length; i < parkeringsPlatser.Length; i++)
-        //{
-        //    parkeringsPlatser[i] = new ParkingSpot(0);
-        //}
-
     }
     SaveParkingSpots();
 }
-
-
-
 (int mcPrize, int carPrize, int garageSize) ReadConfigTxt()
 {
     var configValues = new Dictionary<string, int>();
@@ -587,9 +566,34 @@ void ReloadConfigFile()
 }
 
 
+// Top MainMeny Design
+#region 
+static void FigletPagrueParking()
+{
+    AnsiConsole.Write(
+        new FigletText("Prague Parking")
+            .Centered()
+            .Color(Color.Red));
+    Console.WriteLine("\n\n");
+}
+static void TableStatusVehicle()
+{
+    Table table = new Table();
+    table.AddColumns("[grey]EMPTY SPOT =[/] [green]GREEN[/]",
+                            "[grey]HALF FULL =[/] [yellow]YELLOW[/]",
+                            "[grey]FULL SPOT =[/] [red]RED[/]")
+                            .Collapse();
+    AnsiConsole.Write(table);
+}
+static void TablePriceMeny()
+{
+    var table = new Table();
+    table.AddColumn("Vehicle type: ");
+    table.AddColumn(new TableColumn("Price/H: ").Centered());
+    table.AddRow("Free", "10 min");
+    table.AddRow("Mc", "10 CZK/H");
+    table.AddRow("Car", "20 CZK/H");
 
-
-
-
-
-
+    AnsiConsole.Write(table.SimpleBorder().Alignment(Justify.Left));
+}
+#endregion
