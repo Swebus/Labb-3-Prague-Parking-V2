@@ -27,9 +27,15 @@
     "CurrentSize": 4
   },
   {
-    "parkingSpot": [],
+    "parkingSpot": [
+      {
+        "RegNumber": "56",
+        "ParkingTime": "2024-10-30T12:28:18.2781438+01:00",
+        "Size": 4
+      }
+    ],
     "MaxSize": 4,
-    "CurrentSize": 0
+    "CurrentSize": 4
   },
   {
     "parkingSpot": [],

@@ -51,7 +51,7 @@ while (!exit)
             "Move Vehicle",
             "Find Vehicle",
             "Reload Config File",
-            "Show Parking Spaces",
+            "Clear Garage",
             "Show Detailed Spaces",
             "Close Program",
             }));
@@ -84,9 +84,9 @@ while (!exit)
                 ReloadConfigFile();
                 break;
             }
-        case "Show Parking Spaces":
+        case "Clear Garage":
             {
-                ShowParkingSpaces();
+                ClearGarage();
                 break;
             }
         case "Show Detailed Spaces":
@@ -464,8 +464,6 @@ void ReloadConfigFile()
 
     return (mcPrize, carPrize, garageSize);
 }
-
-
 // Top MainMeny Design
 #region 
 static void FigletPagrueParking()
@@ -497,3 +495,8 @@ static void TablePriceMeny()
     AnsiConsole.Write(table.SimpleBorder().Alignment(Justify.Left));
 }
 #endregion
+
+void ClearGarage()
+{
+
+}
